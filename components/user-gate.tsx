@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import { Clapperboard, Check, Loader2 } from 'lucide-react'
+import { Check, Loader2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { type Friend } from '@/lib/movies'
 import { AVATAR_OPTIONS } from '@/lib/avatars'
@@ -117,9 +117,14 @@ export function UserGate({
     <div className="flex min-h-screen items-center justify-center p-4">
       <div className="w-full max-w-md rounded-3xl border border-border bg-card p-6 sm:p-8">
         <div className="mb-6 flex flex-col items-center text-center">
-          <span className="mb-3 flex size-12 items-center justify-center rounded-2xl bg-primary text-primary-foreground">
-            <Clapperboard className="size-6" />
-          </span>
+          <div className="relative mb-3 size-12 overflow-hidden rounded-2xl border border-border bg-secondary/30">
+            <Image
+              src="/LogoProjeto.png"
+              alt="Logo"
+              fill
+              className="object-cover"
+            />
+          </div>
           <h1 className="font-display text-xl font-bold">Flikz</h1>
           <p className="mt-1 text-sm text-muted-foreground">Escória Club</p>
         </div>

@@ -1,6 +1,7 @@
 'use client'
 
-import { Search, Plus, Clapperboard, LogOut } from 'lucide-react'
+import { Search, Plus, LogOut } from 'lucide-react'
+import Image from 'next/image'
 import { type Friend } from '@/lib/movies'
 import { FriendAvatar } from '@/components/friend-avatar'
 
@@ -20,13 +21,18 @@ export function SiteHeader({
   onSwitchUser: () => void
 }) {
   return (
-    <header className="sticky top-0 z-30 border-b border-border bg-background/80 backdrop-blur-md">
+    <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-3 sm:px-6">
         <div className="flex items-center justify-between gap-3">
           <div className="flex items-center gap-2.5">
-            <span className="flex size-9 items-center justify-center rounded-xl bg-primary text-primary-foreground">
-              <Clapperboard className="size-5" />
-            </span>
+            <div className="relative size-9 overflow-hidden rounded-xl border border-border bg-secondary/30">
+              <Image
+                src="/LogoProjeto.png"
+                alt="Logo"
+                fill
+                className="object-cover"
+              />
+            </div>
             <div className="leading-none">
               <h1 className="font-display text-lg font-bold tracking-tight">
                 Flikz
