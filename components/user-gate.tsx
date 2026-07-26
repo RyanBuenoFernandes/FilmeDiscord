@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import { Check, Loader2 } from 'lucide-react'
+import { Check, Loader2, User } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { type Friend } from '@/lib/movies'
 import { AVATAR_OPTIONS } from '@/lib/avatars'
@@ -223,8 +223,8 @@ export function UserGate({
                       className="object-cover"
                     />
                   ) : (
-                    <span className="flex h-full w-full items-center justify-center text-xs text-muted-foreground">
-                      Sem foto
+                    <span className="flex h-full w-full items-center justify-center bg-secondary/50 text-muted-foreground">
+                      <User className="size-7 opacity-50" />
                     </span>
                   )}
                   {uploading && (
