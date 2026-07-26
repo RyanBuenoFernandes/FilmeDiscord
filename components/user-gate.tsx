@@ -133,8 +133,9 @@ export function UserGate({
           type="button"
           onClick={handleGoogleLogin}
           disabled={loadingGoogle || saving || uploading}
-          className="flex w-full items-center justify-center gap-3 rounded-2xl border border-border bg-background py-3 font-display text-sm font-semibold text-foreground transition hover:bg-secondary/60 active:scale-[0.98] disabled:opacity-50"
+          className="flex w-full cursor-pointer items-center justify-center gap-3 rounded-2xl border border-border bg-background py-3 font-display text-sm font-semibold text-foreground transition hover:bg-secondary/60 active:scale-[0.98] disabled:opacity-50"
         >
+
           {loadingGoogle ? (
             <Loader2 className="size-4 animate-spin" />
           ) : (
@@ -188,7 +189,7 @@ export function UserGate({
                   <button
                     type="button"
                     onClick={() => onLogin(user)}
-                    className="flex w-full items-center gap-3 rounded-2xl p-2 text-left transition hover:bg-secondary/60"
+                    className="flex w-full cursor-pointer items-center gap-3 rounded-2xl p-2 text-left transition hover:bg-secondary/60"
                   >
                     <FriendAvatar friend={user} size="md" />
                     <span className="font-display text-sm font-bold">
@@ -201,7 +202,7 @@ export function UserGate({
             <button
               type="button"
               onClick={() => setMode('create')}
-              className="w-full rounded-xl border border-border py-2.5 text-sm font-semibold text-muted-foreground transition hover:bg-secondary/60 hover:text-foreground"
+              className="w-full cursor-pointer rounded-xl border border-border py-2.5 text-sm font-semibold text-muted-foreground transition hover:bg-secondary/60 hover:text-foreground"
             >
               Criar novo usuário local
             </button>
@@ -259,7 +260,7 @@ export function UserGate({
                     type="button"
                     onClick={() => setAvatar(src)}
                     className={cn(
-                      'relative aspect-square overflow-hidden rounded-full border-2 transition',
+                      'relative aspect-square overflow-hidden rounded-full border-2 transition cursor-pointer',
                       selected
                         ? 'border-primary'
                         : 'border-transparent hover:border-border',
@@ -280,7 +281,7 @@ export function UserGate({
               type="button"
               onClick={handleCreate}
               disabled={!avatar || saving || uploading}
-              className="mb-2.5 flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-2.5 text-sm font-semibold text-primary-foreground transition hover:opacity-90 disabled:pointer-events-none disabled:opacity-50"
+              className="mb-2.5 flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-primary py-2.5 text-sm font-semibold text-primary-foreground transition hover:opacity-90 disabled:pointer-events-none disabled:opacity-50"
             >
               {saving && <Loader2 className="size-4 animate-spin" />}
               {avatar ? (
@@ -298,7 +299,7 @@ export function UserGate({
               <button
                 type="button"
                 onClick={() => setMode('choose')}
-                className="w-full rounded-xl py-2 text-sm font-semibold text-muted-foreground transition hover:text-foreground"
+                className="w-full cursor-pointer rounded-xl py-2 text-sm font-semibold text-muted-foreground transition hover:text-foreground"
               >
                 Já tenho usuário
               </button>
@@ -309,3 +310,4 @@ export function UserGate({
     </div>
   )
 }
+
