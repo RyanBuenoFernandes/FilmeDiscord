@@ -1,4 +1,4 @@
-const COOKIE_NAME = 'flikz_user'
+const COOKIE_NAME = 'escoria_club_user'
 
 export function getStoredUserId(): string | null {
   if (typeof document === 'undefined') return null

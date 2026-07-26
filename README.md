@@ -1,6 +1,6 @@
-# Flikz — Escória Club 🍿
+# Escória Club 🍿
 
-Flikz é uma plataforma web criada para gerenciar uma lista de filmes compartilhada entre amigos (carinhosamente chamados de "Escória"). A plataforma permite sugerir filmes, votar nos próximos títulos a serem assistidos, reagir com emojis e marcar quais já foram assistidos.
+Escória Club é uma plataforma web criada para gerenciar uma lista de filmes compartilhada entre amigos (carinhosamente chamados de "Escória"). A plataforma permite sugerir filmes, votar nos próximos títulos a serem assistidos, reagir com emojis e marcar quais já foram assistidos.
 
 Desenvolvido com **Next.js**, **Firebase Firestore** e **TMDB API**.
 

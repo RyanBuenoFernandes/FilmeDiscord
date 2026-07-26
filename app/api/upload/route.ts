@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
     const uploadResult = await new Promise<any>((resolve, reject) => {
       cloudinary.uploader.upload_stream(
         {
-          folder: 'flikz-avatars',
+          folder: 'escoria-club-avatars',
         },
         (error, result) => {
           if (error) reject(error)

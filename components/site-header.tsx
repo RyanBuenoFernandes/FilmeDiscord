@@ -35,12 +35,10 @@ export function SiteHeader({
             </div>
             <div className="leading-none">
               <h1 className="font-display text-lg font-bold tracking-tight">
-                Flikz
-              </h1>
-              <p className="mt-1 text-[11px] text-muted-foreground">
                 Escória Club
-              </p>
+              </h1>
             </div>
+
           </div>
 
           <div className="flex items-center gap-3">

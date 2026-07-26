@@ -125,8 +125,7 @@ export function UserGate({
               className="object-cover"
             />
           </div>
-          <h1 className="font-display text-xl font-bold">Flikz</h1>
-          <p className="mt-1 text-sm text-muted-foreground">Escória Club</p>
+          <h1 className="font-display text-xl font-bold">Escória Club</h1>
         </div>
 
         {/* Botão de login com Google */}
