@@ -22,9 +22,9 @@ export function UserGate({
   const [mode, setMode] = useState<'choose' | 'create'>(
     users.length > 0 ? 'choose' : 'create',
   )
-  const [name, setName] = useState('')
   const [avatar, setAvatar] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
+  const [uploading, setUploading] = useState(false)
   const [loadingGoogle, setLoadingGoogle] = useState(false)
   const [error, setError] = useState(false)
 
@@ -56,17 +56,53 @@ export function UserGate({
     }
   }
 
+  async function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    setUploading(true)
+    setError(false)
+    const formData = new FormData()
+    formData.append('file', file)
+
+    try {
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      })
+      if (!res.ok) throw new Error('Upload failed')
+      const data = await res.json()
+      setAvatar(data.url)
+    } catch (err) {
+      console.error(err)
+      setError(true)
+    } finally {
+      setUploading(false)
+    }
+  }
+
   async function handleCreate() {
-    const trimmed = name.trim()
-    if (!trimmed || !avatar) return
+    if (!avatar) return
 
     setSaving(true)
     setError(false)
+
+    // Nome gerado automaticamente com base no avatar
+    let resolvedName = ''
+    if (avatar.includes('/avatars/avatar-')) {
+      const match = avatar.match(/avatar-(\d+)/)
+      const index = match ? match[1] : 'Local'
+      resolvedName = `Escória ${index}`
+    } else {
+      const randomNum = Math.floor(100 + Math.random() * 900)
+      resolvedName = `Escória ${randomNum}`
+    }
+
     try {
       const res = await fetch('/api/users', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: trimmed, avatar }),
+        body: JSON.stringify({ name: resolvedName, avatar }),
       })
       if (!res.ok) throw new Error('failed')
       const data: { user: Friend } = await res.json()
@@ -85,16 +121,14 @@ export function UserGate({
             <Clapperboard className="size-6" />
           </span>
           <h1 className="font-display text-xl font-bold">Flikz</h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            nosso clubinho de filmes
-          </p>
+          <p className="mt-1 text-sm text-muted-foreground">Escória Club</p>
         </div>
 
         {/* Botão de login com Google */}
         <button
           type="button"
           onClick={handleGoogleLogin}
-          disabled={loadingGoogle || saving}
+          disabled={loadingGoogle || saving || uploading}
           className="flex w-full items-center justify-center gap-3 rounded-2xl border border-border bg-background py-3 font-display text-sm font-semibold text-foreground transition hover:bg-secondary/60 active:scale-[0.98] disabled:opacity-50"
         >
           {loadingGoogle ? (
@@ -135,7 +169,7 @@ export function UserGate({
 
         {error && (
           <p className="mb-3 text-center text-xs text-destructive">
-            Deu ruim na autenticação. Tenta de novo.
+            Deu ruim na autenticação ou upload. Tenta de novo.
           </p>
         )}
 
@@ -170,19 +204,47 @@ export function UserGate({
           </>
         ) : (
           <>
-            <p className="mb-2 text-sm font-semibold text-foreground">
-              Seu nome
-            </p>
-            <input
-              autoFocus
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Como a Escória te chama?"
-              className="mb-4 h-11 w-full rounded-xl border border-border bg-secondary/60 px-3 text-sm outline-none transition placeholder:text-muted-foreground focus:border-primary/60"
-            />
+            {/* Seção de Upload de Imagem no Cloudinary */}
+            <div className="mb-4">
+              <p className="mb-2 text-sm font-semibold text-foreground">
+                Foto de Perfil Personalizada
+              </p>
+              <div className="flex items-center gap-4">
+                <div className="relative size-14 shrink-0 overflow-hidden rounded-full border border-border bg-secondary/30">
+                  {avatar ? (
+                    <Image
+                      src={avatar}
+                      alt="Avatar"
+                      fill
+                      className="object-cover"
+                    />
+                  ) : (
+                    <span className="flex h-full w-full items-center justify-center text-xs text-muted-foreground">
+                      Sem foto
+                    </span>
+                  )}
+                  {uploading && (
+                    <span className="absolute inset-0 flex items-center justify-center bg-black/60">
+                      <Loader2 className="size-4 animate-spin text-white" />
+                    </span>
+                  )}
+                </div>
 
-            <p className="mb-2 text-sm font-semibold text-foreground">
-              Escolha um avatar
+                <label className="flex cursor-pointer items-center justify-center rounded-xl border border-border bg-background px-4 py-2.5 text-xs font-semibold text-foreground transition hover:bg-secondary/60 active:scale-[0.98] disabled:opacity-50">
+                  {uploading ? 'Enviando…' : 'Subir foto personalizada'}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileUpload}
+                    disabled={uploading || saving}
+                    className="hidden"
+                  />
+                </label>
+              </div>
+            </div>
+
+            <p className="mb-2 text-xs font-semibold text-muted-foreground">
+              Ou escolha um dos avatares padrão:
             </p>
             <div className="mb-5 grid grid-cols-6 gap-2">
               {AVATAR_OPTIONS.map((src) => {
@@ -213,11 +275,19 @@ export function UserGate({
             <button
               type="button"
               onClick={handleCreate}
-              disabled={!name.trim() || !avatar || saving}
+              disabled={!avatar || saving || uploading}
               className="mb-2.5 flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-2.5 text-sm font-semibold text-primary-foreground transition hover:opacity-90 disabled:pointer-events-none disabled:opacity-50"
             >
               {saving && <Loader2 className="size-4 animate-spin" />}
-              Entrar como {name.trim() || '...'}
+              {avatar ? (
+                avatar.includes('/avatars/avatar-') ? (
+                  `Entrar como Escória ${avatar.match(/avatar-(\d+)/)?.[1] || ''}`
+                ) : (
+                  'Entrar com foto personalizada'
+                )
+              ) : (
+                'Escolha um avatar para entrar'
+              )}
             </button>
 
             {users.length > 0 && (
@@ -235,4 +305,3 @@ export function UserGate({
     </div>
   )
 }
-

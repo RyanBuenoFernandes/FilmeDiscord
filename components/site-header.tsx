@@ -32,7 +32,7 @@ export function SiteHeader({
                 Flikz
               </h1>
               <p className="mt-1 text-[11px] text-muted-foreground">
-                nosso clubinho de filmes
+                Escória Club
               </p>
             </div>
           </div>

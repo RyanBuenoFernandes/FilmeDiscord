@@ -14,7 +14,7 @@ const spaceGrotesk = Space_Grotesk({
 })
 
 export const metadata: Metadata = {
-  title: 'Flikz — nosso clubinho de filmes',
+  title: 'Flikz — Escória Club',
   description:
     'A watchlist da nossa Escória. Sugere, vota e marca o que a Escória já assistiu.',
   generator: 'v0.app',
