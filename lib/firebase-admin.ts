@@ -16,7 +16,11 @@ if (hasFirebaseEnv) {
         projectId: process.env.FIREBASE_PROJECT_ID,
         clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
         privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-      }),
+        // Algumas versões/ambientes do SDK exigem chaves em snake_case no runtime
+        project_id: process.env.FIREBASE_PROJECT_ID,
+        client_email: process.env.FIREBASE_CLIENT_EMAIL,
+        private_key: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+      } as any),
     })
 } else {
   // Durante o build do Next.js, caso as variáveis não estejam prontas, evita quebrar a compilação
