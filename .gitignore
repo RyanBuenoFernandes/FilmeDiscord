@@ -22,3 +22,6 @@ node_modules
 DevProjetosFIlmes.netlify.next/
 *.tsbuildinfo
 *.log
+
+#Cloudinary
+
